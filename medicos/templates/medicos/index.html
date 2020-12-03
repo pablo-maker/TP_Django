@@ -1,0 +1,55 @@
+{% extends "medicos/layout.html" %}
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h1 class="mt-5">Medicos</h1>
+        <p class="lead">Bienvenido, {{ request.user.first_name }}</p>
+    </div>
+</div>
+    
+<div class="row">
+    <h3 class="mt-7">Lista de pacientes</h3>
+    <form action="{% url 'medicos:filtrar'%}" method="post" class="form">
+        {% csrf_token %}
+        <input type="date" name="fecha_desde">
+        <input type="date" name="fecha_hasta">
+        <input type="submit" class="btn btn-success">
+    </form>
+    <a href="{% url 'medicos:index' %}" class="btn btn-info" role="button">Limpiar filtro</a>
+    {% if fecha_filtro %}
+        <p>Turnos desde la fecha {{fecha_filtro}}</p>
+    {%endif%}
+</div>
+
+    <div class="row">
+        <div class="col-xl-12 text-left">
+            <h2 class="mt-6">Lista de turnos</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Paciente</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for un_paciente in pacientes %}
+                    <tr>
+                        <th scope="row">{{un_paciente.id}}</th>
+                        <td>{{un_paciente.paciente}}</td>   
+                        <td>{{un_paciente.fecha}}</td> 
+                        <td><a href="{% url 'medicos:paciente' un_paciente.paciente.pk %}" class="btn btn-info" role="button">Historia Medica</a></td> 
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

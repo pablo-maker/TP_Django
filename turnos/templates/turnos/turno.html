@@ -1,0 +1,59 @@
+{% extends "turnos/layout.html" %}
+{% load bootstrap4 %}
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12 text-left">
+        <h1 class="mt-5">Turno #{{turno.id}}</h1>
+        <ul class="list-group">
+            <li class="list-group-item">Nombre del paciente: {{turno.paciente}}</li>
+            <li class="list-group-item">Medico: {{turno.medico.first_name}} {{turno.medico.last_name}}</li>
+            <li class="list-group-item">Fecha: {{turno.fecha}}</li>
+            <li class="list-group-item">Asistencia: {% if turno.asistencia %} Si {%else%} No {%endif%}</li>
+        </ul>
+    </div>
+</div>
+    
+<div class="row">
+    <div class="col-xl-12 text-left">
+        <h2 class="mt-6">Modificar turno</h2>
+        <form action="{% url 'turnos:editar' turno.id %}" method="post" class="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="paciente">Paciente</label>
+                <select name="paciente" class="form-control" id="paciente">
+                    {% for un_paciente in pacientes %}
+                        <option value="{{ un_paciente.id }}" {% if un_paciente.id == turno.paciente.id %} selected {%endif%}>{{ un_paciente }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="medico">Medico</label>
+                <select name="medico" class="form-control" id="medico">
+                    {% for un_medico in medicos %}
+                        <option value="{{ un_medico.id }}" {% if un_paciente.id == turno.paciente.id %} selected {%endif%}>{{ un_medico.first_name }} {{ un_medico.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="date" name="fecha" value="{{turno.fecha|date:'Y-m-d'}}" class="form-control" id="fecha">
+            </div>
+            <div class="form-group">
+                <label for="asistencia">Asistencia</label>
+                <select name="asistencia" class="form-control" id="asistencia">
+                    <option value="False">No</option>
+                    <option value="True">Si</option>
+                </select>
+            </div>
+                <input type="submit" class="btn btn-success">
+        </form>
+
+        
+    </div>
+</div>
+<div class="row">
+    <a href="{% url 'turnos:index' %}" class="btn btn-info" role="button">Volver a la lista</a>
+</div>
+
+{% endblock %}

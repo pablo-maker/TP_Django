@@ -1,0 +1,16 @@
+{% extends "gerencias/layout.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-12 text-left">
+        <h1 class="mt-5">Pedidos</h1>
+        <ul class="list-group">
+            {% for un_pedido in pedidos %}
+                <li class="list-group-item">El paciente {{un_pedido.paciente}} hizo un pedido el dia {{un_pedido.fecha}}</li>
+            {%endfor%}
+            </ul>
+    </div>
+</div>
+
+
+{% endblock %}

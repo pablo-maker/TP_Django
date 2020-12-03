@@ -1,0 +1,90 @@
+{% extends "ventas/layout.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h1 class="mt-5">Ventas</h1>
+        <p class="lead">Bienvenido, {{ request.user.first_name }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 text-left">
+        <h1 class="mt-5">Lista de Pedidos </h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Metodo de pago</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for un_pedido in pedidos %}
+                <tr>
+                    <th scope="row">{{un_pedido.id}}</th>
+                    <td>{{un_pedido.paciente}}</td>   
+                    <td>{{un_pedido.subtotal}}</td>  
+                    <td>{{un_pedido.tipo_pago}}</td>  
+                    <td>{{un_pedido.fecha}}</td> 
+                    <td>{{un_pedido.estado}}</td>   
+                    <td>
+                    <a href="{% url 'ventas:estado_pedido' un_pedido.id %}" class="btn btn-info" role="button">
+                        Pedido
+                    </a>
+                    <a href="{% url 'ventas:estado_taller' un_pedido.id %}" class="btn btn-info" role="button">
+                        Taller
+                    </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</div>
+    
+    
+<div class="row">
+    <div class="col-lg-12 text-left">
+        <h3 class="mt-5">Agregar Pedidos</h3>
+        <form action="{% url 'ventas:nuevo_pedido' %}" method="post" class="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="paciente">Paciente</label>
+                <select name="paciente" class="form-control" id="paciente">
+                    {% for un_paciente in pacientes %}
+                        <option value="{{ un_paciente.id }}">{{un_paciente}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="productos">Productos</label>
+                <select name="producto" class="form-control" multiple id="productos">
+                    {% for un_producto in productos %}
+                        <option value="{{ un_producto.id }}">{{un_producto}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="metodo">Metodo de pago</label>
+                <select name="tipo_pago" class="form-control" id="metodo">
+                    <option>Tarjeta de Credito</option>
+                    <option>Debito</option>
+                    <option>Billetera Virtual</option>
+                    <option>Efectivo</option>
+                </select>
+                <input type="submit" class="btn btn-success">
+            </div>
+        </form>
+        
+    </div>
+</div>
+    
+    
+
+{% endblock %}

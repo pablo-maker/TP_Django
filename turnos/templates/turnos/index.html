@@ -1,0 +1,83 @@
+{% extends "turnos/layout.html" %}
+{% load bootstrap4 %}
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="mt-5">Turnos</h1>
+            <p class="lead">Bienvenido, {{ request.user.first_name }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 text-left">
+            <h2 class="mt-6">Lista de turnos</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Paciente</th>
+                        <th scope="col">Medico</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for un_turno in turnos %}
+                    <tr>
+                        <th scope="row">{{un_turno.id}}</th>
+                        <td>{{un_turno.paciente}}</td>   
+                        <td>{{un_turno.medico.first_name}} {{un_turno.medico.last_name}}</td>   
+                        <td>{{un_turno.fecha}}</td>   
+                        <td>
+                        <a href="{% url 'turnos:turno' un_turno.id %}" class="btn btn-info" role="button">
+                            Editar turno
+                        </a>
+                        <a href="{% url 'turnos:borrar' un_turno.id %}" class="btn btn-danger" role="button">
+                            Borrar turno
+                        </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xl-12 text-left">
+        <h3 class="mt-7">Agregar un nuevo turno</h3>
+            
+        <form action="{% url 'turnos:nuevo_turno' %}" method="post" class="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="paciente">Paciente</label>
+                <select name="paciente" class="form-control" id="paciente">
+                    {% for un_paciente in pacientes %}
+                        <option value="{{ un_paciente.id }}">{{ un_paciente }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="medico">Medico</label>
+                <select name="medico" class="form-control" id="medico">
+                    {% for un_medico in medicos %}
+                        <option value="{{ un_medico.id }}">{{ un_medico.first_name }} {{ un_medico.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="date" name="fecha" class="form-control" id="fecha">
+            </div>
+                <input type="submit" class="btn btn-success">
+        </form>
+
+        
+
+    </div>
+    
+
+{% endblock %}

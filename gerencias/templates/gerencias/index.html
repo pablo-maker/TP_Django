@@ -1,0 +1,75 @@
+{% extends "gerencias/layout.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h1 class="mt-5">Gerencia</h1>
+        <p class="lead">Bienvenido, {{ request.user.first_name }}</p>
+    </div>
+</div>
+    
+<div class="row">
+    <div class="col-lg-12 text-left">
+        <h3 class="mt-5">Reporte:Pacientes que asistieron a los turnos</h3>
+        <div class="list-group">
+            <a href="{% url 'gerencias:asistencias' 'semana'%}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Asistencia de esta semana</h5>
+                </div>   
+            </a>
+            <a href="{% url 'gerencias:asistencias' 'mes'%}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Asistencia de este mes</h5>
+                </div>   
+            </a>
+        </div>
+
+        <h3 class="mt-5">Reporte:Pacientes que NO asistieron a los turnos</h3>
+        <div class="list-group">
+            <a href="{% url  'gerencias:inasistencias' 'semana'%}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Insistencia de esta semana</h5>
+                </div>   
+            </a>
+            <a href="{% url 'gerencias:inasistencias' 'mes'%}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Insistencia de este mes</h5>
+                </div>   
+            </a>
+        </div>
+
+        <h3 class="mt-5">Reporte:Pacientes que hicieron por lo menos un Pedido</h3>
+        <div class="list-group">
+            <a href="{% url  'gerencias:pedidos' 'semana'%}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Pedidos de esta semana</h5>
+                </div>   
+            </a>
+            <a href="{% url 'gerencias:pedidos' 'mes'%}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Pedidos de este mes</h5>
+                </div>   
+            </a>
+        </div>
+
+        <h3 class="mt-5">Reportes del mes</h3>
+        <div class="list-group">
+            <a href="{% url  'gerencias:productos' %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Productos mas vendidos en el mes</h5>
+                </div>   
+            </a>
+            <a href="{% url 'gerencias:ventas'%}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Ventas totales por vendedor por mes</h5>
+                </div>   
+            </a>
+        </div>
+
+        
+
+    </div>
+</div>   
+
+    
+{% endblock %}

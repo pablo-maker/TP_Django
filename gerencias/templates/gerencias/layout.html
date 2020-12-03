@@ -1,0 +1,53 @@
+{% load has_group %}
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Gerencia</title>
+        {# Load the tag library #}
+        {% load bootstrap4 %}
+
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+
+
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+            <div class="container">
+            <a class="navbar-brand" href="{% url 'usuarios:index' %}">Clinica Django</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'usuarios:index' %}">Login
+                    <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'usuarios:logout' %}">Logout</a>
+                
+                </ul>
+            </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+            {% if user|has_group:"Gerentes" %}
+                {% block body %}
+                {% endblock %}
+            {%else%}
+            <spam>403 forbidden</spam>
+            {% endif %}
+        </div>
+        
+    </body>
+</html>

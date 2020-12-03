@@ -1,0 +1,17 @@
+{% extends "gerencias/layout.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12 text-left">
+        <h1 class="mt-5">Asistencias</h1>
+        <ul class="list-group">
+            {% for un_turno in turnos %}
+                <li class="list-group-item">El paciente {{un_turno.paciente}} asistio el dia {{un_turno.fecha}}</li>
+            {%endfor%}
+            </ul>
+    </div>
+</div>
+    
+
+{% endblock %}

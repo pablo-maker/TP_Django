@@ -1,0 +1,18 @@
+{% extends "usuarios/layout.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12 text-left">
+        <h1 class="mt-5">Bienvenido, {{ request.user.first_name }}</h1>
+        <ul class="list-group">
+            <li class="list-group-item">Usuario: {{ request.user.username }}</li>
+            <li class="list-group-item">Email: {{ request.user.email }}</li>
+        </ul>
+    
+        <a href="{% url 'usuarios:logout' %}" class="btn btn-danger" role="button">Desconectarse</a>
+    </div>
+</div>
+
+    
+{% endblock %}
